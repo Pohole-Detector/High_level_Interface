@@ -7,6 +7,15 @@
 #include "GPS.h"
 
 #define DEFAULT_TIMEOUT_MS 100
+#define NUM_PIXELS         10000 // Number of pixels in the array 
+
+struct Picture
+    {
+    char buff[NUM_PIXELS];
+    double dist; // distance of perceived 
+    };
+
+
 /*
  * RPI Interface for Interface.
  * 
@@ -20,13 +29,17 @@
 class RPI
     {
     Bluetooth_Module ble;
-    Cellular_Module cell;
+    Cellular_Module cell;           // Interact with cellular module and send out signals
     GPS gps_mod;
     // IR sensor -> To be added...
 
-    bool task_monitor_for_pothole( );
-    void send_picture( );
+    void task_monitor_for_pothole( ); // Can be embedded in a task (RTOS)
 
+    /*
+     * Function does the processing of the picture. 
+     * Returns true if based on picture, looks like a pothole.
+     */
+    bool process_picture( const Picture& ); 
 public:
     RPI( );
 
@@ -63,7 +76,6 @@ public:
     bool HTTP_POST_start( char *url, char const * contenttype, const uint8_t *postdata, uint16_t postdatalen,  uint16_t *status, uint16_t *datalen );
     void HTTP_POST_end( );
     void setUserAgent( char const * useragent );
-
     };
 
 

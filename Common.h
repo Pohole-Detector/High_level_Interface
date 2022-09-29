@@ -78,10 +78,7 @@ public:
     void putchar( const char c );
     void put_chars( char const *cstr );
 
-    uint32_t read_bytes(  char const *cstr,  );
-
-
+    // Reads up to len bytes (and writes to cstr)
+    uint32_t read_bytes(  char const *cstr, const uint16_t len );
     };
-
-
 #endif
